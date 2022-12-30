@@ -59,6 +59,10 @@
 
         repository.setItem('chosen', chosen);
 
+        let reportList = repository.getByKey('report');
+        reportList.report = _.concat(reportList.report, [{award: targetAward.title, guys: luckyGuys}]);
+        repository.setItem('report', reportList);
+
         awardsRemains = _.without(awardsRemains, targetAward);
 
         return {award: targetAward.title, guys: luckyGuys};
@@ -109,7 +113,23 @@
         },
         methods: {
             outputJSONFile: function () {
-                repository.getDB();
+                let reportResult = JSON.stringify(this.getCurrentReport());
+                const blob = new Blob([reportResult], {type: 'text/plain'});
+                const e = document.createEvent('MouseEvents'),
+                    a = document.createElement('a');
+                let fileName = `resultList-${Date.now().toString()}.json`;
+                a.download = fileName;
+                a.href = window.URL.createObjectURL(blob);
+                a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
+                e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                a.dispatchEvent(e);
+            },
+            getCurrentReport: function () {
+                let reportList = repository.getByKey('report');
+                if (_.isEmpty(_.head(reportList.report)))
+                    reportList.report = _.drop(reportList.report);
+
+                return reportList;
             },
             reset: function () {
                 this.showNotifyModal = true;

@@ -1,6 +1,7 @@
 (function (Vue, _, members, awards) {
     'use strict';
 
+    repository.init(false);
     let canvasId = "tagCloudCanvas";
     let selectedColor = '#42382C';
     let defaultColor = '#F8EDD5FF';
@@ -129,7 +130,7 @@
                 if (_.isEmpty(_.head(reportList.report)))
                     reportList.report = _.drop(reportList.report);
 
-                return reportList;
+                return reportList.report;
             },
             reset: function () {
                 this.showNotifyModal = true;

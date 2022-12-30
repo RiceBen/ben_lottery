@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta content="portrait" name="screen-orientation">
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0"
+          name="viewport"/>
+    <title>Draw Lots</title>
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        .controlPanel {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            text-align: center;
+        }
+
+        .wall {
+            width: 100%;
+            height: 100%;
+            background-image: url(src/assets/images/wall.jpg);
+            overflow: hidden;
+            background-color: #654321;
+            background-size: 100% 100%;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+
+<body>
+<div class="wall" id="main"></div>
+<div class="tile" id="result"></div>
+<div class="controlPanel" id="controlPanel">
+    <button :class="{'button is-primary': !running,
+               'button is-primary is-light': running}" @click="drawing" class="button">
+        <ion-icon name="play-outline"></ion-icon>
+        {{running ? '停！' : '抽！'}}
+    </button>
+    <button @click="reset" class="button is-warning">
+        <ion-icon name="refresh-outline"></ion-icon>
+        重置
+    </button>
+    <button @click="outputJSONFile" class="button is-info">
+        <ion-icon name="download-outline"></ion-icon>
+        匯出
+    </button>
+
+    <div class="modal" v-bind:class="{ 'is-active': showLuckGuysModal}">
+        <div class="modal-background" v-on:click="showLuckGuysModal = false"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">{{!_.isEmpty(luckyGuys) ? luckyGuys.award : ''}}</p>
+            </header>
+            <section class="modal-card-body">
+                <div class="box">{{!_.isEmpty(luckyGuys) ? luckyGuys.guys.join(', ') : warningMsg}}</div>
+            </section>
+            <footer class="modal-card-foot">
+                <button aria-label="close" class="modal-close is-large" v-on:click="showLuckGuysModal = false"></button>
+            </footer>
+        </div>
+    </div>
+    <modal-notification @clear="clearStorage" @close="showNotifyModal = false"
+                        v-if="showNotifyModal"></modal-notification>
+</div>
+
+<script crossorigin="anonymous" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+        type="module"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.45/vue.global.prod.min.js"></script>
+<script defer src="https://www.goat1000.com/tagcanvas.min.js"></script>
+<script defer src="src/config/members.js"></script>
+<script defer src="src/config/awards.js"></script>
+<script defer src="src/models/storage.js"></script>
+<script defer src="src/app.js"></script>
+</body>
+
+</html>

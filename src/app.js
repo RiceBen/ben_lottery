@@ -1,11 +1,11 @@
-(function (Vue, _, members, awards) {
+(function (Vue, _, storage, members, awards) {
     'use strict';
 
-    repository.init(false);
+    storage.init(false);
     let canvasId = "tagCloudCanvas";
     let selectedColor = '#42382C';
     let defaultColor = '#F8EDD5FF';
-    let chosen = repository.getByKey('chosen');
+    let chosen = storage.getByKey('chosen');
     let awardsRemains = awards;
 
     const getKey = function (item) {
@@ -58,11 +58,11 @@
                 return item.name;
             });
 
-        repository.setItem('chosen', chosen);
+        storage.setItem('chosen', chosen);
 
-        let reportList = repository.getByKey('report');
+        let reportList = storage.getByKey('report');
         reportList.report = _.concat(reportList.report, [{award: targetAward.title, guys: luckyGuys}]);
-        repository.setItem('report', reportList);
+        storage.setItem('report', reportList);
 
         awardsRemains = _.without(awardsRemains, targetAward);
 
@@ -126,7 +126,7 @@
                 a.dispatchEvent(e);
             },
             getCurrentReport: function () {
-                let reportList = repository.getByKey('report');
+                let reportList = storage.getByKey('report');
                 if (_.isEmpty(_.head(reportList.report)))
                     reportList.report = _.drop(reportList.report);
 
@@ -139,7 +139,7 @@
                 /**
                  * Clear storage data and init all variable
                  * */
-                repository.clearAll();
+                storage.clearAll();
                 awardsRemains = awards;
                 chosen = {};
                 this.showNotifyModal = false;
@@ -191,4 +191,4 @@
         }
     });
     app.mount('#controlPanel');
-})(Vue, _, members, awards);
+}(Vue, _, repository, members, awards));

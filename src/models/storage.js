@@ -50,4 +50,4 @@ const repository = (function () {
             getStorage().clear();
         }
     }
-})();
+}());

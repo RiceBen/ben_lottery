@@ -114,16 +114,23 @@
         },
         methods: {
             outputJSONFile: function () {
-                let reportResult = JSON.stringify(this.getCurrentReport());
-                const blob = new Blob([reportResult], {type: 'text/plain'});
-                const e = document.createEvent('MouseEvents'),
-                    a = document.createElement('a');
-                let fileName = `resultList-${Date.now().toString()}.json`;
-                a.download = fileName;
-                a.href = window.URL.createObjectURL(blob);
-                a.dataset.downloadurl = ['text/json', a.download, a.href].join(':');
-                e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-                a.dispatchEvent(e);
+                const reportResult = JSON.stringify(this.getCurrentReport());
+                const blob = new Blob([reportResult], {type: 'text/plain;charset=UTF-8'});
+
+                const downloadLink = document.createElement('a');
+                downloadLink.download = `resultList-${Date.now().toString()}.json`;
+                downloadLink.href = window.URL.createObjectURL(blob);
+                downloadLink.dataset.downloadurl = ['text/json', downloadLink.download, downloadLink.href].join(':');
+
+                const clickEvent = new MouseEvent('click', {
+                    bubbles: true,
+                    cancelable: false
+                });
+                downloadLink.addEventListener('click', (event) =>{}, false);
+                downloadLink.dispatchEvent(clickEvent);
+
+                window.URL.revokeObjectURL(downloadLink.href);
+                downloadLink.remove();
             },
             getCurrentReport: function () {
                 let reportList = storage.getByKey('report');

@@ -51,3 +51,5 @@ const repository = (function () {
         }
     }
 }());
+
+export default {repository: repository};

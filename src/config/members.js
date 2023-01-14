@@ -150,3 +150,5 @@ const members = [{
     "id": 50,
     "name": "Jodie Buttress"
 }];
+
+export default members;

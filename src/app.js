@@ -1,11 +1,15 @@
-(function (Vue, _, storage, members, awards) {
+import storage from './models/storage.js'
+import members from './config/members.js'
+import awards from './config/awards.js'
+
+(function (Vue, _) {
     'use strict';
 
-    storage.init(false);
+    storage.repository.init(false);
     let canvasId = "tagCloudCanvas";
     let selectedColor = '#42382C';
     let defaultColor = '#F8EDD5FF';
-    let chosen = storage.getByKey('chosen');
+    let chosen = storage.repository.getByKey('chosen');
     let awardsRemains = awards;
 
     const getKey = function (item) {
@@ -58,11 +62,11 @@
                 return item.name;
             });
 
-        storage.setItem('chosen', chosen);
+        storage.repository.setItem('chosen', chosen);
 
-        let reportList = storage.getByKey('report');
+        let reportList = storage.repository.getByKey('report');
         reportList.report = _.concat(reportList.report, [{award: targetAward.title, guys: luckyGuys}]);
-        storage.setItem('report', reportList);
+        storage.repository.setItem('report', reportList);
 
         awardsRemains = _.without(awardsRemains, targetAward);
 
@@ -126,14 +130,15 @@
                     bubbles: true,
                     cancelable: false
                 });
-                downloadLink.addEventListener('click', (event) =>{}, false);
+                downloadLink.addEventListener('click', (event) => {
+                }, false);
                 downloadLink.dispatchEvent(clickEvent);
 
                 window.URL.revokeObjectURL(downloadLink.href);
                 downloadLink.remove();
             },
             getCurrentReport: function () {
-                let reportList = storage.getByKey('report');
+                let reportList = storage.repository.getByKey('report');
                 if (_.isEmpty(_.head(reportList.report)))
                     reportList.report = _.drop(reportList.report);
 
@@ -146,7 +151,7 @@
                 /**
                  * Clear storage data and init all variable
                  * */
-                storage.clearAll();
+                storage.repository.clearAll();
                 awardsRemains = awards;
                 chosen = {};
                 this.showNotifyModal = false;
@@ -198,4 +203,4 @@
         }
     });
     app.mount('#controlPanel');
-}(Vue, _, repository, members, awards));
+}(Vue, _));

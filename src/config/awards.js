@@ -15,3 +15,5 @@ const awards = [{
     "title":"JACKPOT",
     "quota": 1
 }];
+
+export default awards;

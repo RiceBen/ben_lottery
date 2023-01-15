@@ -1,6 +1,6 @@
 # Special Thanks
 
-This project inspire by [fouber.lottery](https://github.com/fouber/lottery)
+This project inspired by [fouber.lottery](https://github.com/fouber/lottery)
 
 # GOAL
 
@@ -20,8 +20,21 @@ This project inspire by [fouber.lottery](https://github.com/fouber/lottery)
 ## User Guide
 
 1. 確保 `award.js` 裡面的獎項都已經設定好
+   1. 欄位屬性 `quota` 表示該獎項有多少人可以拿
 2. 確保 `member.js` 裡面的人員都已經設定好
-3. 用瀏覽器打開 `index.html` 
+   1. 欄位屬性 `id` 作為唯一標示值
+
+### How to Run
+
+- `Win` + `r`
+  - pwsh
+  -  cd {project folder}
+- 建立 image
+  - `{podman|docker} build -t {your tag name} -f .\Dockerfile`
+- 執行 image
+  - `{podman|docker} run -dit --name {your container name} -p {host port}:80/tcp {your tag name}` 
+- 開瀏覽器打完收工
+  - `http://localhost:{host port}` 
 
 ## Drawing Flow：
 

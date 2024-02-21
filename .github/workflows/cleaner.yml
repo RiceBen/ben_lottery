@@ -1,0 +1,23 @@
+# Simple workflow for deploying static content to GitHub Pages
+name: Branches Cleaner
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  # Single deploy job since we're just deploying
+  cleaner:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Clean Branches
+        uses: RiceBen/branch-cleaner-action@v1.0.0
+        with:
+          secToken: ${{ secrets.GITHUB_TOKEN }}
+          protect-branch-name: |
+            main
+            master
+          expiry-period-in-days: 5
+          is-force-delete: true

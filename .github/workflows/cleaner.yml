@@ -19,5 +19,5 @@ jobs:
           protect-branch-name: |
             main
             master
-          expiry-period-in-days: 5
+          expiry-period-in-days: 1
           is-force-delete: true

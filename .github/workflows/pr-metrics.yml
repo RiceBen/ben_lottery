@@ -12,6 +12,8 @@ jobs:
       statuses: write
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     - name: PR Metrics
       uses: microsoft/PR-Metrics@v1.5.11
       env:

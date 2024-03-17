@@ -13,11 +13,11 @@ jobs:
       contents: write
     steps:
       - name: Clean Branches
-        uses: RiceBen/branch-cleaner-action@v1.0.0
+        uses: RiceBen/branch-cleaner-action@v1.0.2
         with:
           secToken: ${{ secrets.GITHUB_TOKEN }}
           protect-branch-name: |
             main
             master
           expiry-period-in-days: 1
-          is-force-delete: true
+          is-force-delete: false

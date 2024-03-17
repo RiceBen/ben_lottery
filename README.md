@@ -28,7 +28,7 @@ This project inspire by [fouber.lottery](https://github.com/fouber/lottery)
 滑鼠點擊 `抽!` 這個按鈕，並按下 `停!` 按鈕即可，會一次把此次抽的獎項需要的名額一口氣抽完。
 若已經沒有獎項可以抽，就會直接跳出提示視窗。
 
-### Key variable and file
+### Key variables and files
 
 - config/award.js: 存放這次要抽的獎項，由上到下
 - config/member.js: 存放這次可以抽的人員名單

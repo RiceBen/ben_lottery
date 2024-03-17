@@ -11,6 +11,7 @@ jobs:
       pull-requests: write
       statuses: write
     steps:
+    - uses: actions/checkout@v4
     - name: PR Metrics
       uses: microsoft/PR-Metrics@v1.5.11
       env:
